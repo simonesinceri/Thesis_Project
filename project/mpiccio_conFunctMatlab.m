@@ -20,3 +20,6 @@ for i=1:3
     %plot(scenario)
 
 end
+
+% alternativa simulare modello simulink per un episodio, terminarlo 
+% con stop condition e aggiornare tutti i valori così in loop
