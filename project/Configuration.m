@@ -20,7 +20,7 @@ egoID = 1;
 % Per adesso, all'iterazione successiva nel for basta che cambio questi
 % valori ed è fatta
 x_0 = 1;
-y_0 = 1;
+y_0 = 0;
 
 x_dot_in = 1;
 steerang_in = 0;
