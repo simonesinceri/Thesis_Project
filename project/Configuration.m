@@ -18,7 +18,7 @@ width_car = 1.8;
 height_car = 1.4;
 
 % Safety dist
-safetyDist = 1;
+safetyDist = 1.5;
 lateralSft = 1;
 frontSft = 1;
 retroSft = 1;
@@ -36,6 +36,7 @@ limSx = 10;
 limDx = -10;
 limUp = 25;
 limDown = 0;
+% limiti su vx e vy
 
 Ts = 0.1;
 numEpisodes = 2;
@@ -47,21 +48,35 @@ gamma = 1;
 M = 3; % numero celle
 N = 8;%4; % numero griglie  num righe
 
-A = 3; % numero azioni [-1,0,1]  -> queste sono di più
+A = 3*3; % numero azioni [-1,0,1] su vlong e [-1 0 1] su angsterzo
+% azione vettore 2*1
+passo_v
+passo_steerang
 
+nCells = (M + 1)^4;
+d = A*N*nCells;
+
+[gridx, gridy, gridvx, gridvy] = build_tiles(lbx, ubx, lbv, ubv, M, N);
+w = zeros(d, 1);
+ 
 % Stato Iniziale
 % Per adesso, all'iterazione successiva nel for basta che cambio questi
 % valori ed è fatta
-x_0 = 1;
-y_0 = 0;
+x_0 = 20;
+y_0 = 5;
 v_longitudinal = 0;
 v_lateral = 0;
 
 %Azioni iniziali
-x_dot_in = 1;
+x_dot_in = 0;
 steerang_in = 0;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Manca il corpo di questo for
+% simulazione e aggiornamento parametri
 
 % simulo numEpisodes volte modello Simulink
 for i=0:numEpisodes
+    
     %sim("Vehicle_dynamics")  % aggiornare nome modello simulink
  end
