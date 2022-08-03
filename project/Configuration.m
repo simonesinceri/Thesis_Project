@@ -31,22 +31,22 @@ frontDistCG = 3.7;
 egoID = 1;
 
 % limiti spaziali ambiente simulazione
-limSx = 10;
-limDx = -10;
-limUp = 25;
-limDown = 0;
+lby = -10; %limSx = 10;
+uby = 10; %limDx = -10;
+lbx = 0; %limUp = 25;       % attenzione qui -> ricontrollare
+ubx = 25; %limDown = 0;
 % limiti su vx e vy
-lbvx = 2;
-ubvx = -2;
-lbvy = 2; % queste possono anche essere inferiori
-ubvy = -2;
+lbvx = -2;
+ubvx = 2;
+lbvy = -2; % queste possono anche essere inferiori
+ubvy = 2;
 
 
 Ts = 0.1; % tempo campionamento scenario
 numEpisodes = 2;
 epsilon = 1e-1;
 alpha = 1e-3;
-gamma = 1;
+gamma = 0.9; %1
 
 % M N A sono da rivedere
 M = 3; % numero celle
@@ -59,9 +59,9 @@ passo_steerang = 30;
 
 nCells = (M + 1)^4;
 d = A*N*nCells;
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%[gridx, gridy, gridvx, gridvy] = build_tiles(lbx, ubx, lbv, ubv, M, N);
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+[gridx, gridy, gridvx, gridvy] = construct_tiles(lbx, ubx, lby, uby, lbvx, ubvx, lbvy, ubvy, M, N);
+
 w = zeros(d, 1);
  
 % devo definire range stato iniziale
@@ -72,8 +72,8 @@ v_longitudinal = 0;  % sta roba va portata dentro il for ,tutto stato iniz
 v_lateral = 0;
 
 %Azioni iniziali  , pure questo devo portarlo dentro il for
-az_1 = 1;  %x_dot_in = 0;
-az_2 = 1;   %steerang_in = 0;
+%az_1 = 1;  %x_dot_in = 0;
+%az_2 = 1;   %steerang_in = 0;
 
 %x_in = [x_0;y_0;v_longitudinal;v_lateral];
 
@@ -90,6 +90,8 @@ for i=0:numEpisodes
     x_in = [x_0;y_0;v_longitudinal;v_lateral];
 
     % azionne iniziale epsgreedy
+    a_in = eps_greedy(x_in, w, epsilon, gridx, gridy, gridvx, gridvy, M, N, A);
+    [az_1, az_2] = ind2sub([3 3], a_in);
     % az_1 
     % az_2
 
@@ -97,6 +99,6 @@ for i=0:numEpisodes
     %sim("Vehicle_dynamics")  % aggiornare nome modello simulink
 
     % da qua finito episodio
-    % 
+    % w passati su MATLAB con assignin
  end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

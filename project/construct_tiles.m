@@ -22,7 +22,7 @@ dvx = (ubvx - lbvx)/M;
 TVX = lbvx - dvx:dvx:ubvx;
 
 dvy = (ubvy - lbvy)/M; 
-TVY = lbxyvy - dvy:dvy:ubvy;
+TVY = lbvy - dvy:dvy:ubvy;
 
 % costruisco le griglie lungo x e lungo y(velocità)
 gridx = zeros(N, length(TX)); % tante righe quante le griglie da generare
