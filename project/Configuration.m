@@ -2,7 +2,6 @@
 clc
 clear 
 
-
 % Ts tempo di campionamento dello scenario reader
 % lo utilizzo per rate tra le porte
 load("BusActors1.mat")
@@ -37,8 +36,13 @@ limDx = -10;
 limUp = 25;
 limDown = 0;
 % limiti su vx e vy
+lbvx = 2;
+ubvx = -2;
+lbvy = 2; % queste possono anche essere inferiori
+ubvy = -2;
 
-Ts = 0.1;
+
+Ts = 0.1; % tempo campionamento scenario
 numEpisodes = 2;
 epsilon = 1e-1;
 alpha = 1e-3;
@@ -50,33 +54,49 @@ N = 8;%4; % numero griglie  num righe
 
 A = 3*3; % numero azioni [-1,0,1] su vlong e [-1 0 1] su angsterzo
 % azione vettore 2*1
-passo_v
-passo_steerang
+passo_v = 0.1;
+passo_steerang = 30;
 
 nCells = (M + 1)^4;
 d = A*N*nCells;
-
-[gridx, gridy, gridvx, gridvy] = build_tiles(lbx, ubx, lbv, ubv, M, N);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%[gridx, gridy, gridvx, gridvy] = build_tiles(lbx, ubx, lbv, ubv, M, N);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 w = zeros(d, 1);
  
-% Stato Iniziale
-% Per adesso, all'iterazione successiva nel for basta che cambio questi
-% valori ed è fatta
-x_0 = 20;
-y_0 = 5;
-v_longitudinal = 0;
+% devo definire range stato iniziale
+% x -> [5 20] y -> [5 0] 
+%x_0 = 10;
+%y_0 = 5;
+v_longitudinal = 0;  % sta roba va portata dentro il for ,tutto stato iniz
 v_lateral = 0;
 
-%Azioni iniziali
-x_dot_in = 0;
-steerang_in = 0;
+%Azioni iniziali  , pure questo devo portarlo dentro il for
+az_1 = 1;  %x_dot_in = 0;
+az_2 = 1;   %steerang_in = 0;
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%x_in = [x_0;y_0;v_longitudinal;v_lateral];
+
 % Manca il corpo di questo for
 % simulazione e aggiornamento parametri
 
 % simulo numEpisodes volte modello Simulink
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 for i=0:numEpisodes
     
+    % stato iniziale random
+    x_0 = 15*rand+5;
+    y_0 = 5*rand;
+    x_in = [x_0;y_0;v_longitudinal;v_lateral];
+
+    % azionne iniziale epsgreedy
+    % az_1 
+    % az_2
+
+    % simulazione episodio e aggiornamento parametri con modello simulink
     %sim("Vehicle_dynamics")  % aggiornare nome modello simulink
+
+    % da qua finito episodio
+    % 
  end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
