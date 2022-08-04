@@ -43,7 +43,7 @@ ubvy = 2;
 
 
 Ts = 0.1; % tempo campionamento scenario
-numEpisodes = 2;
+numEpisodes = 50;
 epsilon = 1e-1;
 alpha = 1e-3;
 gamma = 0.9; %1
@@ -72,20 +72,18 @@ v_longitudinal = 0;  % sta roba va portata dentro il for ,tutto stato iniz
 v_lateral = 0;
 
 %Azioni iniziali  , pure questo devo portarlo dentro il for
-az_1 = 1;  %x_dot_in = 0;
-az_2 = 1;   %steerang_in = 0;
+% [-1, 0, 1]
+% sottraggo (-2)
+%az_1 = 2;  %x_dot_in = 0;
+%az_2 = 2;   %steerang_in = 0;
 % 1 1 qui siamo ancora con indici 1 2 3 devo sommare -2 per portare in
 % azione vera
 
 
 %x_in = [x_0;y_0;v_longitudinal;v_lateral];
 
-% Manca il corpo di questo for
-% simulazione e aggiornamento parametri
-
-% simulo numEpisodes volte modello Simulink
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-for i=0:numEpisodes
+tic
+for i=1:numEpisodes
     
     % stato iniziale random
     x_0 = 15*rand+5;
@@ -95,14 +93,15 @@ for i=0:numEpisodes
     % azionne iniziale epsgreedy
 
     % errore qui a_in sempre 1, capiree cme vuole lo stato
-    %a_in = eps_greedy(x_in, w, epsilon, gridx, gridy, gridvx, gridvy, M, N, A);
-    %[az_1, az_2] = ind2sub([3 3], a_in);
+    a_in = eps_greedy(x_in, w, epsilon, gridx, gridy, gridvx, gridvy, M, N, A);
+    [az_1, az_2] = ind2sub([3 3], a_in);
   
 
     % simulazione episodio e aggiornamento parametri con modello simulink
-    %sim("Vehicle_dynamics")  % aggiornare nome modello simulink
+    sim("Vehicle_dynamics");  % aggiornare nome modello simulink
 
     % da qua finito episodio
     % w passati su MATLAB con assignin
  end
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+toc
