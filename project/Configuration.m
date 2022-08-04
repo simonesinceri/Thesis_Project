@@ -72,8 +72,11 @@ v_longitudinal = 0;  % sta roba va portata dentro il for ,tutto stato iniz
 v_lateral = 0;
 
 %Azioni iniziali  , pure questo devo portarlo dentro il for
-%az_1 = 1;  %x_dot_in = 0;
-%az_2 = 1;   %steerang_in = 0;
+az_1 = 1;  %x_dot_in = 0;
+az_2 = 1;   %steerang_in = 0;
+% 1 1 qui siamo ancora con indici 1 2 3 devo sommare -2 per portare in
+% azione vera
+
 
 %x_in = [x_0;y_0;v_longitudinal;v_lateral];
 
@@ -90,10 +93,11 @@ for i=0:numEpisodes
     x_in = [x_0;y_0;v_longitudinal;v_lateral];
 
     % azionne iniziale epsgreedy
-    a_in = eps_greedy(x_in, w, epsilon, gridx, gridy, gridvx, gridvy, M, N, A);
-    [az_1, az_2] = ind2sub([3 3], a_in);
-    % az_1 
-    % az_2
+
+    % errore qui a_in sempre 1, capiree cme vuole lo stato
+    %a_in = eps_greedy(x_in, w, epsilon, gridx, gridy, gridvx, gridvy, M, N, A);
+    %[az_1, az_2] = ind2sub([3 3], a_in);
+  
 
     % simulazione episodio e aggiornamento parametri con modello simulink
     %sim("Vehicle_dynamics")  % aggiornare nome modello simulink
