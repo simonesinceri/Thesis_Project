@@ -43,7 +43,7 @@ ubvy = 2;
 
 
 Ts = 0.1; % tempo campionamento scenario
-numEpisodes = 50;
+numEpisodes = 100;
 epsilon = 1e-1;
 alpha = 1e-3;
 gamma = 0.9; %1
@@ -74,8 +74,8 @@ v_lateral = 0;
 %Azioni iniziali  , pure questo devo portarlo dentro il for
 % [-1, 0, 1]
 % sottraggo (-2)
-%az_1 = 2;  %x_dot_in = 0;
-%az_2 = 2;   %steerang_in = 0;
+az_1 = 2;  %x_dot_in = 0;
+az_2 = 2;   %steerang_in = 0;
 % 1 1 qui siamo ancora con indici 1 2 3 devo sommare -2 per portare in
 % azione vera
 
@@ -86,19 +86,24 @@ tic
 for i=1:numEpisodes
     
     % stato iniziale random
-    x_0 = 15*rand+5;
-    y_0 = 5*rand;
+    x_0 = 15;%;15*rand+5;
+    y_0 = 5;%5*rand;
     x_in = [x_0;y_0;v_longitudinal;v_lateral];
 
     % azionne iniziale epsgreedy
 
     % errore qui a_in sempre 1, capiree cme vuole lo stato
-    a_in = eps_greedy(x_in, w, epsilon, gridx, gridy, gridvx, gridvy, M, N, A);
-    [az_1, az_2] = ind2sub([3 3], a_in);
+   % a_in = eps_greedy(x_in, w, epsilon, gridx, gridy, gridvx, gridvy, M, N, A);
+    %[az_1, az_2] = ind2sub([3 3], a_in);
   
 
     % simulazione episodio e aggiornamento parametri con modello simulink
+    set_param("Vehicle_dynamics",'FastRestart','on')
     sim("Vehicle_dynamics");  % aggiornare nome modello simulink
+
+    if(mod(i,10)==0)
+        i
+    end
 
     % da qua finito episodio
     % w passati su MATLAB con assignin
