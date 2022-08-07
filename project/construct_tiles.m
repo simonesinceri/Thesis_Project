@@ -3,9 +3,9 @@
 % numero celle di uguale dimensione, devo agg ulteriore cella per poter
 % fare spostamenti
 
-function [gridx, gridy, gridvx, gridvy] = construct_tiles(lbx, ubx, lby, uby, lbvx, ubvx,lbvy, ubvy, M, N)
+function [gridx, gridy, gridvx, gridvy, gridyaw] = construct_tiles(lbx, ubx, lby, uby, lbvx, ubvx,lbvy, ubvy, lbyaw, ubyaw, M, N)
 
-off = [1; 3; 5 ; 7]; % offset 1 in una direzioe 3 nell'altra
+off = [1; 3; 5 ; 7; 9]; % offset 1 in una direzioe 3 nell'altra
 off = off./max(off); % devo normalizzare qst offset in modo che le mie
 % griglie non escono dalla regione operativa
 % un po starborda dato l'offset ma non mi interessa
@@ -24,11 +24,15 @@ TVX = lbvx - dvx:dvx:ubvx;
 dvy = (ubvy - lbvy)/M; 
 TVY = lbvy - dvy:dvy:ubvy;
 
+dyaw = (ubyaw - lbyaw)/M; 
+TYAW = lbyaw - dyaw:dyaw:ubyaw;
+
 % costruisco le griglie lungo x e lungo y(velocità)
 gridx = zeros(N, length(TX)); % tante righe quante le griglie da generare
 gridy = zeros(N, length(TY));
 gridvx= zeros(N, length(TVX));
 gridvy = zeros(N, length(TVY));
+gridyaw = zeros(N, length(TYAW));
 
 
 % prima riga già costruita pari a TX
@@ -36,6 +40,7 @@ gridx(1, :) = TX;
 gridy(1, :) = TY;
 gridvx(1, :) = TVX;
 gridvy(1, :) = TVY;
+gridyaw(1, :) = TYAW;
 
 % succesive righe da offsettare di una piccola quantità
 for ii = 2 : N
@@ -43,4 +48,5 @@ for ii = 2 : N
     gridy(ii, :) = TY + off(2)*dy/N*(ii-1);
     gridvx(ii, :) = TVX + off(3)*dvx/N*(ii-1); % (ii-1) per non avere pezzi inutili fuori
     gridvy(ii, :) = TVY + off(4)*dvy/N*(ii-1);
+    gridyaw(ii, :) = TYAW + off(5)*dyaw/N*(ii-1);
 end

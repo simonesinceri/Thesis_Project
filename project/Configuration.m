@@ -40,10 +40,12 @@ lbvx = -2;
 ubvx = 2;
 lbvy = -2; % queste possono anche essere inferiori
 ubvy = 2;
+lbyaw = -360;
+ubyaw = 360;
 
 
 Ts = 0.1; % tempo campionamento scenario
-numEpisodes = 100;
+numEpisodes = 10;
 epsilon = 1e-1;
 alpha = 1e-3;
 gamma = 0.9; %1
@@ -57,10 +59,10 @@ A = 3*3; % numero azioni [-1,0,1] su vlong e [-1 0 1] su angsterzo
 passo_v = 0.1;
 passo_steerang = 30;
 
-nCells = (M + 1)^4;
+nCells = (M + 1)^5;
 d = A*N*nCells;
 
-[gridx, gridy, gridvx, gridvy] = construct_tiles(lbx, ubx, lby, uby, lbvx, ubvx, lbvy, ubvy, M, N);
+[gridx, gridy, gridvx, gridvy, gridyaw] = construct_tiles(lbx, ubx, lby, uby, lbvx, ubvx, lbvy, ubvy, lbyaw, ubyaw, M, N);
 
 w = zeros(d, 1);
  
@@ -70,31 +72,32 @@ w = zeros(d, 1);
 %y_0 = 5;
 v_longitudinal = 0;  % sta roba va portata dentro il for ,tutto stato iniz
 v_lateral = 0;
+yaw_in = 0;
 
 %Azioni iniziali  , pure questo devo portarlo dentro il for
 % [-1, 0, 1]
 % sottraggo (-2)
-az_1 = 2;  %x_dot_in = 0;
-az_2 = 2;   %steerang_in = 0;
+%az_1 = 2;  %x_dot_in = 0;
+%az_2 = 2;   %steerang_in = 0;
 % 1 1 qui siamo ancora con indici 1 2 3 devo sommare -2 per portare in
 % azione vera
 
 
 %x_in = [x_0;y_0;v_longitudinal;v_lateral];
-%%
+
 tic
 for i=1:numEpisodes
     
     % stato iniziale random
     x_0 = 15*rand+5;
     y_0 = 5*rand;
-    x_in = [x_0;y_0;v_longitudinal;v_lateral];
+    x_in = [x_0;y_0;v_longitudinal;v_lateral;yaw_in];
 
     % azionne iniziale epsgreedy
 
     % errore qui a_in sempre 1, capiree cme vuole lo stato
-   % a_in = eps_greedy(x_in, w, epsilon, gridx, gridy, gridvx, gridvy, M, N, A);
-    %[az_1, az_2] = ind2sub([3 3], a_in);
+    a_in = eps_greedy(x_in, w, epsilon, gridx, gridy, gridvx, gridvy, gridyaw, M, N, A);
+    [az_1, az_2] = ind2sub([3 3], a_in);
   
 
     % simulazione episodio e aggiornamento parametri con modello simulink
@@ -102,7 +105,7 @@ for i=1:numEpisodes
     sim("Vehicle_dynamics");  % aggiornare nome modello simulink
 
     if(mod(i,10)==0)
-        i
+        disp(i)
     end
 
     % da qua finito episodio
