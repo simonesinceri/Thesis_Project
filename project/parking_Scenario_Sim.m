@@ -1,4 +1,4 @@
-function [allData, scenario, sensor] = parking_Scenario_Sim(state)
+function [allData, scenario, sensor] = parking_Scenario_Sim(state, vel)
 
 % state contiene pti traiettoria e velocità
 
@@ -14,7 +14,7 @@ function [allData, scenario, sensor] = parking_Scenario_Sim(state)
 % Generated on: 07-Aug-2022 00:06:06
 
 % Create the drivingScenario object and ego car
-[scenario, egoVehicle] = createDrivingScenario(state);
+[scenario, egoVehicle] = createDrivingScenario(state, vel);
 plot(scenario)
 
 % Create all the sensors
@@ -81,7 +81,7 @@ sensor = visionDetectionGenerator('SensorIndex', 1, ...
     'Intrinsics', cameraIntrinsics([600 800],[320 240],[480 640]), ...
     'ActorProfiles', profiles);
 
-function [scenario, egoVehicle] = createDrivingScenario(state)
+function [scenario, egoVehicle] = createDrivingScenario(state, vel)
 % createDrivingScenario Returns the drivingScenario defined in the Designer
 
 % Construct a drivingScenario object.
@@ -102,17 +102,16 @@ egoVehicle = vehicle(scenario, ...
     'Mesh', driving.scenario.carMesh, ...
     'Name', 'Car');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  qui inserisco i
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  dato di satte
-waypoints = [3 2 0.01;
-    9.57 3.03 0.01;
-    12.58 5.26 0.01;
-    16.51 2.15 0.01];
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  dato di state
+waypoints = state;
 
-speed = [5;6;8;10];
+speed = vel;
 
-yaw =  [0;NaN;NaN;NaN];
+% dovrebbe funzionare anche senza yaw
+%yaw =  [0;NaN;NaN;NaN];
 
-trajectory(egoVehicle, waypoints, speed, 'Yaw', yaw);
+%trajectory(egoVehicle, waypoints, speed, 'Yaw', yaw);
+trajectory(egoVehicle, waypoints, speed);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Add the non-ego actors

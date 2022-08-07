@@ -81,13 +81,13 @@ az_2 = 2;   %steerang_in = 0;
 
 
 %x_in = [x_0;y_0;v_longitudinal;v_lateral];
-
+%%
 tic
 for i=1:numEpisodes
     
     % stato iniziale random
-    x_0 = 15;%;15*rand+5;
-    y_0 = 5;%5*rand;
+    x_0 = 15*rand+5;
+    y_0 = 5*rand;
     x_in = [x_0;y_0;v_longitudinal;v_lateral];
 
     % azionne iniziale epsgreedy
