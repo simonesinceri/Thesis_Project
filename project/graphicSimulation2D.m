@@ -16,7 +16,8 @@ output = sim("model_graphicSim.slx");
 
 % Eventuale visualizzione di r,a per vedere come si comporta
 %fprintf("r = %f a = %f \n", r, (a_in-2))
-output.reward % printo rewardsS
+
+%output.reward % printo rewardsS
 
 fprintf("Fine Episodio \n")
 

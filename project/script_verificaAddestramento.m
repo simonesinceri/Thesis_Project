@@ -1,12 +1,14 @@
 % Script per visualizzare graficamente se l'addestramento è efficace
 clc
-clear
+%clear
 
-load test_sim.mat
+%load test_sim.mat
 load("BusActors1.mat")
 load("BusActors1Actors.mat")
 
+eps = 0;
 s = [15*rand+5; 5*rand; 0; 0;0]
+%s = [12; 4; 0; 0;0]
 x_0 = s(1);
 y_0 = s(2);
 

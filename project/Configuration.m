@@ -17,7 +17,7 @@ width_car = 1.8;
 height_car = 1.4;
 
 % Safety dist
-safetyDist = 1.5;
+safetyDist = 3;
 lateralSft = 1;
 frontSft = 1;
 retroSft = 1;
@@ -36,8 +36,8 @@ uby = 10; %limDx = -10;
 lbx = 0; %limUp = 25;       % attenzione qui -> ricontrollare
 ubx = 25; %limDown = 0;
 % limiti su vx e vy
-lbvx = -2;
-ubvx = 2;
+lbvx = -1;
+ubvx = 1;
 lbvy = -2; % queste possono anche essere inferiori
 ubvy = 2;
 lbyaw = -360;
@@ -45,7 +45,7 @@ ubyaw = 360;
 
 
 Ts = 0.1; % tempo campionamento scenario
-numEpisodes = 10;
+numEpisodes = 100;
 epsilon = 1e-1;
 alpha = 1e-3;
 gamma = 0.9; %1
@@ -101,12 +101,15 @@ for i=1:numEpisodes
   
 
     % simulazione episodio e aggiornamento parametri con modello simulink
-    set_param("Vehicle_dynamics",'FastRestart','on')
-    sim("Vehicle_dynamics");  % aggiornare nome modello simulink
+    %set_param("Vehicle_dynamics",'FastRestart','on')
+    set_param("Vehicle_dynamics_Radar",'FastRestart','on')
+    %sim("Vehicle_dynamics");  % aggiornare nome modello simulink
+    sim("Vehicle_dynamics_Radar");
 
-    if(mod(i,10)==0)
-        disp(i)
-    end
+%     if(mod(i,10)==0)
+%         disp(i)
+%     end
+    disp(i)
 
     % da qua finito episodio
     % w passati su MATLAB con assignin
