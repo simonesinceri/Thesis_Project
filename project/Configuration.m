@@ -17,7 +17,7 @@ width_car = 1.8;
 height_car = 1.4;
 
 % Safety dist
-safetyDist = 3;
+safetyDist = 2;
 lateralSft = 1;
 frontSft = 1;
 retroSft = 1;
@@ -31,7 +31,8 @@ frontDistCG = 3.7;
 egoID = 1;
 
 % limiti spaziali ambiente simulazione
-lby = -10; %limSx = 10;
+%lby = -10; %limSx = 10;
+lby = -3;      % proviamo questa per ovviare altra linea
 uby = 10; %limDx = -10;
 lbx = 0; %limUp = 25;       % attenzione qui -> ricontrollare
 ubx = 25; %limDown = 0;

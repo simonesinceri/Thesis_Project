@@ -1,4 +1,4 @@
-function graphicSimulation2D(w,gridx,gridy,gridvx,gridvy,gridyaw,M,N,A)
+function [st ,r ] = graphicSimulation2D(w,gridx,gridy,gridvx,gridvy,gridyaw,M,N,A)
 
 % Carico eventuali dati addestrati,devo prima fare il load
 % prima il load dei parametri che servono
@@ -35,6 +35,8 @@ for i=1:lenEp
     %yaw_a(i) = app(5);
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+st = output.stato;
+r = output.reward;
 
 close all
 parking_Scenario_Sim(state, vel, yaw_a);  % funzione matlab esportata da drivingScenario

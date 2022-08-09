@@ -2,7 +2,8 @@
 clc
 %clear
 
-%load test_sim.mat
+load test_sim_100Ep_v3.mat
+%load test_sim_1000Ep_v2newparam.mat
 load("BusActors1.mat")
 load("BusActors1Actors.mat")
 
@@ -15,7 +16,7 @@ y_0 = s(2);
 a_in = eps_greedy(s, w, 0, gridx, gridy,gridvx, gridvy, gridyaw, M, N, A);
 [az_1,az_2] = ind2sub([3 3], a_in);
 
-graphicSimulation2D(w,gridx,gridy,gridvx,gridvy,gridyaw,M,N,A)
+[st, r] = graphicSimulation2D(w,gridx,gridy,gridvx,gridvy,gridyaw,M,N,A);
 
 
 % cosa salvare su file
