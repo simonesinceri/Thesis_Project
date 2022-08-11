@@ -1,4 +1,4 @@
-function graphicSimulation2D(st)
+function graphicSimulation2D(st,r)
 
 % Carico eventuali dati addestrati,devo prima fare il load
 % prima il load dei parametri che servono
@@ -42,4 +42,5 @@ close all
 parking_Scenario_Sim(state, vel, yaw_a);  % funzione matlab esportata da drivingScenario
 % display stato finale
 st_final = st(:,:,end)
+final_reward = r(end)
 end

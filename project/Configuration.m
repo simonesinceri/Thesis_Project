@@ -17,6 +17,7 @@ width_car = 1.8;
 height_car = 1.4;
 
 % Safety dist
+%safetyDist = 1;
 safetyDist = 2;
 lateralSft = 1;
 frontSft = 1;
@@ -37,16 +38,16 @@ uby = 10; %limDx = -10;
 lbx = 0; %limUp = 25;       % attenzione qui -> ricontrollare
 ubx = 25; %limDown = 0;
 % limiti su vx e vy
-lbvx = -1;
-ubvx = 1;
-lbvy = -2; % queste possono anche essere inferiori
-ubvy = 2;
+lbvx = -2;
+ubvx = 2;
+lbvy = -20; % queste possono anche essere inferiori
+ubvy = 20;
 lbyaw = -360;
 ubyaw = 360;
 
 
 Ts = 0.1; % tempo campionamento scenario
-numEpisodes = 100;
+numEpisodes = 5000;
 epsilon = 1e-1;
 alpha = 1e-3;
 gamma = 0.9; %1
@@ -65,8 +66,11 @@ d = A*N*nCells;
 
 [gridx, gridy, gridvx, gridvy, gridyaw] = construct_tiles(lbx, ubx, lby, uby, lbvx, ubvx, lbvy, ubvy, lbyaw, ubyaw, M, N);
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 w = zeros(d, 1);
- 
+%load test_sim_5000Ep_v5.mat
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
 % devo definire range stato iniziale
 % x -> [5 20] y -> [5 0] 
 %x_0 = 10;
@@ -117,3 +121,5 @@ for i=1:numEpisodes
  end
 
 toc
+
+save test_sim_10000Ep_v6.mat w Ts gridx gridy gridvx gridvy gridyaw M N A passo_v passo_steerang d egoID lby uby lbx ubx lbvx ubvx lbvy ubvy safetyDist leftDistCG retroDistCG frontDistCG
