@@ -30,6 +30,8 @@ vel = zeros(lenEp,1); % velx e vely mi interesa solo sux o devo calcolare la vel
 yaw_a = zeros(lenEp,1);
 for i=1:lenEp
     app = st(:,:,i);
+    %proviamo a invertire la y
+    %state(i,1:2) = [app(1) -app(2)];
     state(i,1:2) = [app(1) app(2)];
     vel(i) = app(3);
     %yaw_a(i) = app(5);

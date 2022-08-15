@@ -1,23 +1,27 @@
 % Script per visualizzare graficamente se l'addestramento è efficace
 clc
-clear
+%clear
 
-load test_sim_5000Ep_v5.mat
-%load test_sim_1000Ep_v2newparam.mat
+%load test_sim_10000Ep_v6.mat
+load test_sim_5000Ep_v11.mat
 load("BusActors1.mat")
 load("BusActors1Actors.mat")
 
 eps = 0;
-s = [15*rand+5; 5*rand; 0; 0;0]
-%s = [10; 6; 0; 0;0]
+% old
+%s = [15*rand+5; 5*rand; 0; 0;0]
+% new
+s = [10*rand+7; (9*rand+0.2); 0; 0;0]
+%s = [2; 3; 0; 0;0]
 x_0 = s(1);
-y_0 = s(2);
+y_0 = -s(2);
 
 a_in = eps_greedy(s, w, 0, gridx, gridy,gridvx, gridvy, gridyaw, M, N, A);
 [az_1,az_2] = ind2sub([3 3], a_in);
 
 [st ,r ,output] = simulation2D(w,gridx,gridy,gridvx,gridvy,gridyaw,M,N,A);
-graphicSimulation2D(st,r);
+
+%graphicSimulation2D(st,r);
 
 
 % cosa salvare su file

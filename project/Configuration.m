@@ -17,8 +17,8 @@ width_car = 1.8;
 height_car = 1.4;
 
 % Safety dist
-%safetyDist = 1;
-safetyDist = 2;
+safetyDist = 1;
+%safetyDist = 2;
 lateralSft = 1;
 frontSft = 1;
 retroSft = 1;
@@ -33,7 +33,7 @@ egoID = 1;
 
 % limiti spaziali ambiente simulazione
 %lby = -10; %limSx = 10;
-lby = -3;      % proviamo questa per ovviare altra linea
+lby = 0;      % proviamo questa per ovviare altra linea
 uby = 10; %limDx = -10;
 lbx = 0; %limUp = 25;       % attenzione qui -> ricontrollare
 ubx = 25; %limDown = 0;
@@ -51,15 +51,18 @@ numEpisodes = 5000;
 epsilon = 1e-1;
 alpha = 1e-3;
 gamma = 0.9; %1
+lambda = 1; 
 
 % M N A sono da rivedere
-M = 3; % numero celle
-N = 8;%4; % numero griglie  num righe
+M = 5; % numero celle
+N = 10;%4; % numero griglie  num righe
 
 A = 3*3; % numero azioni [-1,0,1] su vlong e [-1 0 1] su angsterzo
 % azione vettore 2*1
-passo_v = 0.1;
-passo_steerang = 30;
+passo_v = 0.5;   %0.1 
+passo_steerang = 180; %30
+ub_angSt = 1080;
+lb_angSt = -1080;
 
 nCells = (M + 1)^5;
 d = A*N*nCells;
@@ -68,7 +71,7 @@ d = A*N*nCells;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 w = zeros(d, 1);
-%load test_sim_5000Ep_v5.mat
+%load test_sim_5000Ep_v9.mat w
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 % devo definire range stato iniziale
@@ -90,14 +93,21 @@ yaw_in = 0;
 
 %x_in = [x_0;y_0;v_longitudinal;v_lateral];
 
-tic
+%tic
 for i=1:numEpisodes
-    
-    % stato iniziale random
-    x_0 = 15*rand+5;
-    y_0 = 5*rand;
-    x_in = [x_0;y_0;v_longitudinal;v_lateral;yaw_in];
+    % For ET
+    z_in = zeros(d,1);
 
+    % stato iniziale random
+    %x_0 = 10*rand+7;  
+    %y_0 = 9*rand+0.2;
+    %s = [10*rand+7; 9*rand; 0; 0;0];
+    %x_in = [x_0;y_0;v_longitudinal;v_lateral;yaw_in];
+
+    % devo mettere dei meno dato inversione asse y
+    x_0 = 10*rand+7;  
+    y_0 = -(9*rand+0.2);
+    x_in = [x_0;-y_0;v_longitudinal;v_lateral;yaw_in];
     % azionne iniziale epsgreedy
 
     % errore qui a_in sempre 1, capiree cme vuole lo stato
@@ -109,17 +119,18 @@ for i=1:numEpisodes
     %set_param("Vehicle_dynamics",'FastRestart','on')
     set_param("Vehicle_dynamics_Radar",'FastRestart','on')
     %sim("Vehicle_dynamics");  % aggiornare nome modello simulink
-    sim("Vehicle_dynamics_Radar");
+    simEp = sim("Vehicle_dynamics_Radar");
 
 %     if(mod(i,10)==0)
 %         disp(i)
 %     end
     disp(i)
+    disp(simEp.rewEp)
 
     % da qua finito episodio
     % w passati su MATLAB con assignin
  end
 
-toc
+%toc
 
-save test_sim_10000Ep_v6.mat w Ts gridx gridy gridvx gridvy gridyaw M N A passo_v passo_steerang d egoID lby uby lbx ubx lbvx ubvx lbvy ubvy safetyDist leftDistCG retroDistCG frontDistCG
+save test_sim_5000Ep_v11.mat w Ts lb_angSt ub_angSt gridx gridy gridvx gridvy gridyaw M N A passo_v passo_steerang d egoID lby uby lbx ubx lbvx ubvx lbvy ubvy safetyDist leftDistCG retroDistCG frontDistCG
