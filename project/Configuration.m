@@ -61,8 +61,12 @@ A = 3*3; % numero azioni [-1,0,1] su vlong e [-1 0 1] su angsterzo
 % azione vettore 2*1
 passo_v = 0.5;   %0.1 
 passo_steerang = 180; %30
-ub_angSt = 1080;
-lb_angSt = -1080;
+
+% ub_angSt = 1080;
+% lb_angSt = -1080;
+ub_angSt = 900;
+lb_angSt = -900;
+
 
 nCells = (M + 1)^5;
 d = A*N*nCells;
@@ -70,8 +74,8 @@ d = A*N*nCells;
 [gridx, gridy, gridvx, gridvy, gridyaw] = construct_tiles(lbx, ubx, lby, uby, lbvx, ubvx, lbvy, ubvy, lbyaw, ubyaw, M, N);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%w = zeros(d, 1);
-load test_sim_5000Ep_v11.mat w
+w = zeros(d, 1);
+%load test_sim_5000Ep_v11.mat w
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 % devo definire range stato iniziale
@@ -105,7 +109,7 @@ for i=1:numEpisodes
     %x_in = [x_0;y_0;v_longitudinal;v_lateral;yaw_in];
 
     % devo mettere dei meno dato inversione asse y
-    x_0 = 10*rand+7;  
+    x_0 = 12*rand+5;  
     y_0 = -(9*rand+0.2);
     x_in = [x_0;-y_0;v_longitudinal;v_lateral;yaw_in];
     % azionne iniziale epsgreedy
@@ -126,6 +130,7 @@ for i=1:numEpisodes
 %     end
     disp(i)
     disp(simEp.rewEp)
+    %disp(simEp.stato_s.Data(5))
 
     % da qua finito episodio
     % w passati su MATLAB con assignin
@@ -133,4 +138,4 @@ for i=1:numEpisodes
 
 %toc
 
-save test_sim_10000Ep_v12.mat w Ts lb_angSt ub_angSt gridx gridy gridvx gridvy gridyaw M N A passo_v passo_steerang d egoID lby uby lbx ubx lbvx ubvx lbvy ubvy safetyDist leftDistCG retroDistCG frontDistCG
+save test_sim_5000Ep_v13.mat w Ts lb_angSt ub_angSt gridx gridy gridvx gridvy gridyaw M N A passo_v passo_steerang d egoID lby uby lbx ubx lbvx ubvx lbvy ubvy safetyDist leftDistCG retroDistCG frontDistCG
