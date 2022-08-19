@@ -109,8 +109,8 @@ for i=1:numEpisodes
     %x_in = [x_0;y_0;v_longitudinal;v_lateral;yaw_in];
 
     % devo mettere dei meno dato inversione asse y
-    x_0 = 12*rand+5;  
-    y_0 = -(9*rand+0.2);
+    x_0 = 20*rand+2;  
+    y_0 = -(5*rand+0.2);
     x_in = [x_0;-y_0;v_longitudinal;v_lateral;yaw_in];
     % azionne iniziale epsgreedy
 

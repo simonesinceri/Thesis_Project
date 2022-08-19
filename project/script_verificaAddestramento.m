@@ -3,7 +3,7 @@ clc
 %clear
 
 %load test_sim_10000Ep_v6.mat
-load test_sim_10000Ep_v12_G.mat
+load test_sim_2375Ep_v13.mat
 load("BusActors1.mat")
 load("BusActors1Actors.mat")
 
@@ -12,8 +12,8 @@ eps = 0;
 %s = [15*rand+5; 5*rand; 0; 0;0]
 % new
 % [(7 17) (0.2 9.2)]
-s = [8; 5; 0; 0;0]
-%s = [12*rand+5; (9*rand+0.2); 0; 0;0]
+%s = [8; 5; 0; 0;0]
+s = [20*rand+2; (5*rand+0.2); 0; 0;0]
 %s = [11; 4; 0; 0;0] % comportamento strano laterale
 x_0 = s(1);
 y_0 = -s(2);
