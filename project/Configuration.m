@@ -17,8 +17,9 @@ width_car = 1.8;
 height_car = 1.4;
 
 % Safety dist
-safetyDist = 1;
-%safetyDist = 2;
+safetyDist = 1;  % new change
+%safetyDist = 1;
+
 lateralSft = 1;
 frontSft = 1;
 retroSft = 1;
@@ -75,7 +76,7 @@ d = A*N*nCells;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 w = zeros(d, 1);
-%load test_sim_5000Ep_v11.mat w
+%load test_sim_2375Ep_v13.mat w
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 % devo definire range stato iniziale
@@ -109,8 +110,12 @@ for i=1:numEpisodes
     %x_in = [x_0;y_0;v_longitudinal;v_lateral;yaw_in];
 
     % devo mettere dei meno dato inversione asse y
-    x_0 = 20*rand+2;  
-    y_0 = -(5*rand+0.2);
+    x_0 = 20*rand+2;
+    if((x_0 <= 13.8) && (x_0 >= 6))
+        y_0 = -(9*rand+0.2);
+    else
+        y_0 = -(5*rand+0.2);
+    end
     x_in = [x_0;-y_0;v_longitudinal;v_lateral;yaw_in];
     % azionne iniziale epsgreedy
 
@@ -138,4 +143,4 @@ for i=1:numEpisodes
 
 %toc
 
-save test_sim_5000Ep_v13.mat w Ts lb_angSt ub_angSt gridx gridy gridvx gridvy gridyaw M N A passo_v passo_steerang d egoID lby uby lbx ubx lbvx ubvx lbvy ubvy safetyDist leftDistCG retroDistCG frontDistCG
+save test_sim_5000Ep_v15.mat w Ts lb_angSt ub_angSt gridx gridy gridvx gridvy gridyaw M N A passo_v passo_steerang d egoID lby uby lbx ubx lbvx ubvx lbvy ubvy safetyDist leftDistCG retroDistCG frontDistCG
