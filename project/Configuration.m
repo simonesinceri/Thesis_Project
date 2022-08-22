@@ -55,7 +55,7 @@ gamma = 0.9; %1
 lambda = 1; 
 
 % M N A sono da rivedere
-M = 5; % numero celle
+M = 4; % numero celle  era 5
 N = 10;%4; % numero griglie  num righe
 
 A = 3*3; % numero azioni [-1,0,1] su vlong e [-1 0 1] su angsterzo
