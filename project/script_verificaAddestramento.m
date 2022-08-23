@@ -15,7 +15,7 @@ eps = 0;
 % [(7 17) (0.2 9.2)]
 %s = [8; 5; 0; 0;0]
 %s = [20*rand+2; (5*rand+0.2); 0; 0;0]
-s = [12; 6; 0; 0;0] % comportamento strano laterale
+s = [18; 2; 0; 0;0] % comportamento strano laterale
 x_0 = s(1);
 y_0 = -s(2);
 
