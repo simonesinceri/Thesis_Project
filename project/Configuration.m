@@ -17,7 +17,7 @@ width_car = 1.8;
 height_car = 1.4;
 
 % Safety dist
-safetyDist = 1;  % new change
+safetyDist = 0.5;  % new change
 %safetyDist = 1;
 
 lateralSft = 1;
@@ -34,7 +34,10 @@ egoID = 1;
 
 % limiti spaziali ambiente simulazione
 %lby = -10; %limSx = 10;
-lby = 0;      % proviamo questa per ovviare altra linea
+%lby = 0;      % proviamo questa per ovviare altra linea
+
+lby = 2;
+
 uby = 10; %limDx = -10;
 lbx = 0; %limUp = 25;       % attenzione qui -> ricontrollare
 ubx = 25; %limDown = 0;
@@ -43,8 +46,12 @@ lbvx = -2;
 ubvx = 2;
 lbvy = -20; % queste possono anche essere inferiori
 ubvy = 20;
-lbyaw = -360;
-ubyaw = 360;
+
+%lbyaw = -360;
+%ubyaw = 360;
+lbyaw = -90;
+ubyaw = 90;
+
 
 
 Ts = 0.1; % tempo campionamento scenario
@@ -55,7 +62,7 @@ gamma = 0.9; %1
 lambda = 1; 
 
 % M N A sono da rivedere
-M = 4; % numero celle  era 5
+M = 5; % numero celle  era 5
 N = 10;%4; % numero griglie  num righe
 
 A = 3*3; % numero azioni [-1,0,1] su vlong e [-1 0 1] su angsterzo
@@ -75,8 +82,8 @@ d = A*N*nCells;
 [gridx, gridy, gridvx, gridvy, gridyaw] = construct_tiles(lbx, ubx, lby, uby, lbvx, ubvx, lbvy, ubvy, lbyaw, ubyaw, M, N);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%w = zeros(d, 1);
-load test_sim_3500Ep_v16.mat w
+w = zeros(d, 1);                                        % attention !!!
+%load test_sim_3500Ep_v16.mat w
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 % devo definire range stato iniziale
@@ -112,9 +119,9 @@ for i=1:numEpisodes
     % devo mettere dei meno dato inversione asse y
     x_0 = 20*rand+2;
     if((x_0 <= 13.8) && (x_0 >= 6))
-        y_0 = -(9*rand+0.2);
+        y_0 = -(7*rand+2.2);  
     else
-        y_0 = -(5*rand+0.2);
+        y_0 = -(3*rand+2.2);
     end
     x_in = [x_0;-y_0;v_longitudinal;v_lateral;yaw_in];
     % azionne iniziale epsgreedy
@@ -143,4 +150,4 @@ for i=1:numEpisodes
 
 %toc
 
-save test_sim_8500Ep_v17.mat w Ts lb_angSt ub_angSt gridx gridy gridvx gridvy gridyaw M N A passo_v passo_steerang d egoID lby uby lbx ubx lbvx ubvx lbvy ubvy safetyDist leftDistCG retroDistCG frontDistCG
+save test_sim_5000Ep_v1_yaw.mat w Ts lb_angSt ub_angSt gridx gridy gridvx gridvy gridyaw M N A passo_v passo_steerang d egoID lby uby lbx ubx lbvx ubvx lbvy ubvy safetyDist leftDistCG retroDistCG frontDistCG
