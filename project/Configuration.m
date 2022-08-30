@@ -18,7 +18,7 @@ height_car = 1.4;
 
 % Safety dist
 safetyDist = 0.5;  % new change
-%safetyDist = 1;
+%safetyDist = 0.3;
 
 lateralSft = 1;
 frontSft = 1;
@@ -55,7 +55,7 @@ ubyaw = 90;
 
 
 Ts = 0.1; % tempo campionamento scenario
-numEpisodes = 5000;
+numEpisodes = 100;
 epsilon = 1e-1;
 alpha = 1e-3;
 gamma = 0.9; %1
@@ -105,6 +105,10 @@ yaw_in = 0;
 
 %x_in = [x_0;y_0;v_longitudinal;v_lateral];
 
+
+%load_system("Vehicle_dynamics_Radar")
+%open_system("Vehicle_dynamics_Radar")
+
 %tic
 for i=1:numEpisodes
     % For ET
@@ -132,9 +136,7 @@ for i=1:numEpisodes
   
 
     % simulazione episodio e aggiornamento parametri con modello simulink
-    %set_param("Vehicle_dynamics",'FastRestart','on')
     set_param("Vehicle_dynamics_Radar",'FastRestart','on')
-    %sim("Vehicle_dynamics");  % aggiornare nome modello simulink
     simEp = sim("Vehicle_dynamics_Radar");
 
 %     if(mod(i,10)==0)
