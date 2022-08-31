@@ -2,11 +2,11 @@
 clc
 clear
 
-%load test_sim_10000Ep_v12_G_oldScen.mat
+load test_sim_10000Ep_v12_G_oldScen.mat
 %load test_sim_2375Ep_v13.mat
 %load test_sim_3275Ep_v14.mat
 
-load test_sim_5000Ep_v1_yaw.mat
+%load test_sim_5000Ep_v1_yaw.mat
 load("BusActors1.mat")
 load("BusActors1Actors.mat")
 

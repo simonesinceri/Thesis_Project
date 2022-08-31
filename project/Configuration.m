@@ -55,15 +55,15 @@ ubyaw = 90;
 
 
 Ts = 0.1; % tempo campionamento scenario
-numEpisodes = 100;
+numEpisodes = 10000;
 epsilon = 1e-1;
 alpha = 1e-3;
 gamma = 0.9; %1
 lambda = 1; 
 
-% M N A sono da rivedere
-M = 5; % numero celle  era 5
-N = 10;%4; % numero griglie  num righe
+
+M = 5; % numero celle  
+N = 10; % numero griglie  num righe
 
 A = 3*3; % numero azioni [-1,0,1] su vlong e [-1 0 1] su angsterzo
 % azione vettore 2*1
@@ -106,7 +106,7 @@ yaw_in = 0;
 %x_in = [x_0;y_0;v_longitudinal;v_lateral];
 
 
-%load_system("Vehicle_dynamics_Radar")
+load_system("Vehicle_dynamics_Radar")
 %open_system("Vehicle_dynamics_Radar")
 
 %tic
@@ -121,12 +121,14 @@ for i=1:numEpisodes
     %x_in = [x_0;y_0;v_longitudinal;v_lateral;yaw_in];
 
     % devo mettere dei meno dato inversione asse y
-    x_0 = 20*rand+2;
-    if((x_0 <= 13.8) && (x_0 >= 6))
-        y_0 = -(7*rand+2.2);  
-    else
-        y_0 = -(3*rand+2.2);
-    end
+%     x_0 = 20*rand+2;
+%     if((x_0 <= 13.8) && (x_0 >= 6))
+%         y_0 = -(7*rand+2.2);  
+%     else
+%         y_0 = -(3*rand+2.2);
+%     end
+    x_0 = 1*rand+20;  
+    y_0 = -(4*rand+2);
     x_in = [x_0;-y_0;v_longitudinal;v_lateral;yaw_in];
     % azionne iniziale epsgreedy
 
@@ -152,4 +154,4 @@ for i=1:numEpisodes
 
 %toc
 
-save test_sim_5000Ep_v1_yaw.mat w Ts lb_angSt ub_angSt gridx gridy gridvx gridvy gridyaw M N A passo_v passo_steerang d egoID lby uby lbx ubx lbvx ubvx lbvy ubvy safetyDist leftDistCG retroDistCG frontDistCG
+save test_sim_10000Ep_v1_dist.mat w Ts lb_angSt ub_angSt gridx gridy gridvx gridvy gridyaw M N A passo_v passo_steerang d egoID lby uby lbx ubx lbvx ubvx lbvy ubvy lbyaw ubyaw safetyDist leftDistCG retroDistCG frontDistCG
