@@ -59,7 +59,7 @@ numEpisodes = 10000;
 epsilon = 1e-1;
 alpha = 1e-3;
 gamma = 0.9; %1
-lambda = 1; 
+lambda = 0.8; 
 
 
 M = 5; % numero celle  
@@ -82,8 +82,8 @@ d = A*N*nCells;
 [gridx, gridy, gridvx, gridvy, gridyaw] = construct_tiles(lbx, ubx, lby, uby, lbvx, ubvx, lbvy, ubvy, lbyaw, ubyaw, M, N);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-w = zeros(d, 1);                                        % attention !!!
-%load test_sim_3500Ep_v16.mat w
+%w = zeros(d, 1);                                        % attention !!!
+load test_sim_10000Ep_v1_dist.mat w
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 % devo definire range stato iniziale
@@ -127,8 +127,8 @@ for i=1:numEpisodes
 %     else
 %         y_0 = -(3*rand+2.2);
 %     end
-    x_0 = 1*rand+20;  
-    y_0 = -(4*rand+2);
+    x_0 = 2*rand+19;  
+    y_0 = -(3.5*rand+2);
     x_in = [x_0;-y_0;v_longitudinal;v_lateral;yaw_in];
     % azionne iniziale epsgreedy
 
@@ -154,4 +154,4 @@ for i=1:numEpisodes
 
 %toc
 
-save test_sim_10000Ep_v1_dist.mat w Ts lb_angSt ub_angSt gridx gridy gridvx gridvy gridyaw M N A passo_v passo_steerang d egoID lby uby lbx ubx lbvx ubvx lbvy ubvy lbyaw ubyaw safetyDist leftDistCG retroDistCG frontDistCG
+save test_sim_15000Ep_v2_dist.mat w Ts lb_angSt ub_angSt gridx gridy gridvx gridvy gridyaw M N A passo_v passo_steerang d egoID lby uby lbx ubx lbvx ubvx lbvy ubvy lbyaw ubyaw safetyDist leftDistCG retroDistCG frontDistCG

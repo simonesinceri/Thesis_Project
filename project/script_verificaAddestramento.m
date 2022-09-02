@@ -2,7 +2,9 @@
 clc
 clear
 
-load test_sim_10000Ep_v12_G_oldScen.mat
+%load test_sim_10000Ep_v12_G_oldScen.mat
+%load test_sim_10000Ep_v1_dist.mat
+load test_sim_10984Ep_vOld_dist.mat
 %load test_sim_2375Ep_v13.mat
 %load test_sim_3275Ep_v14.mat
 
@@ -11,7 +13,7 @@ load("BusActors1.mat")
 load("BusActors1Actors.mat")
 
 ubyaw = 90;
-lbyaw= -90;
+lbyaw = -90;
 
 eps = 0;
 % old
@@ -30,6 +32,9 @@ eps = 0;
 % %     y_0 = -(3*rand+2.2);
 % % end
 % % s = [x_0;-y_0;0;0;0]
+x_0 = 2*rand+19;  
+y_0 = -(3.5*rand+2);
+s = [x_0;-y_0;0;0;0]
 
 x_0 = s(1);
 y_0 = -s(2);
